@@ -30,7 +30,7 @@ async function pingUrl(url) {
 async function checkUrls() {
     const urls = [
         'https://surveypay.onrender.com/',
-        'https://second-url-here.com' // Replace this with your second URL
+        'https://refresh-n9bs.onrender.com'
     ];
 
     console.log('Pinging URLs...\n');
