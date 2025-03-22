@@ -1,6 +1,19 @@
 const http = require('http');
 const https = require('https');
 
+// Simple HTTP server for Render health checks
+const server = http.createServer((req, res) => {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('URL Pinger is running\n');
+});
+
+// Use the port Render provides (default to 3000 for local testing)
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => {
+    console.log(`Server running on port ${PORT} for health checks`);
+});
+
+// Existing URL pinging logic
 async function pingUrl(url) {
     return new Promise((resolve, reject) => {
         const protocol = url.startsWith('https') ? https : http;
@@ -48,12 +61,9 @@ async function checkUrls() {
     });
 }
 
-// Set interval to 3 minutes
 const intervalMinutes = 3;
-// Convert to milliseconds (minutes * seconds * milliseconds)
 const intervalMs = intervalMinutes * 60 * 1000;
 
-// Run immediately once, then every 3 minutes
 checkUrls().catch(err => console.error('An error occurred:', err));
 setInterval(() => {
     checkUrls().catch(err => console.error('An error occurred:', err));
